@@ -1,8 +1,8 @@
-# Ed's - Custom Articulation Keyswitch for REAPER [![Lua](https://img.shields.io/badge/Lua-%232C2D72.svg?logo=lua&logoColor=white)](#) [![Sublime Text](https://img.shields.io/badge/Sublime%20Text-%23575757.svg?logo=sublime-text&logoColor=important)](#)
+# Ed's - ArticulateTriggerNOW! ReaScript (.lua) [![Lua](https://img.shields.io/badge/Lua-%232C2D72.svg?logo=lua&logoColor=white)](#)
 REAPER Version: 7.39 (as the time the code was written, but they do update very often!)
 
 ## What is this?
-REAPER (DAW) plugin to simplify keyswitch articulation easier.
+REAPER (DAW) script to simplify adding keyswitch articulation trigger easier.
 For this specific case, I use SubMission Audio's EuroBass III, you can adjust the code based on your liking
 
 Showcase video soon!
