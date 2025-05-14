@@ -10,6 +10,7 @@ Showcase video soon!
 ### Current Features:
 - [x] Key to open custom menu and select the list from there
 - [x] Select MIDI note(s) you want to add, then select the desired keyswitch articulation
+- [x] Delete overlapping MIDI note if existing when the action is done
 
 ### To Do:
 - [ ] Auto detect .lua script files instead of manually registering it to the menu .lua  
