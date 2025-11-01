@@ -1,4 +1,4 @@
-local articulation_note = 7
+local articulation_note = 10
 local articulation_velocity = 127
 
 local editor = reaper.MIDIEditor_GetActive()
@@ -61,5 +61,5 @@ for _, sel in ipairs(selected_ranges) do
 end
 
 reaper.MIDI_Sort(take)
-reaper.Undo_EndBlock("Insert EuroBass III Down Pick articulation (overwrite cleanly)", -1)
+reaper.Undo_EndBlock("Insert TruBass - Tapping articulation", -1)
 
