@@ -20,6 +20,9 @@ Please note that articulations that are listed will work based on bass library y
 
 Showcase video soon!
 
+For easier midi programming, you might need this midi piano roll notes name for Reaper:
+https://github.com/DigitalInBlue/ReaperNoteNames/blob/main/submissionaudio_djinbass2.txt
+
 ## Current Features:
 - [x] Assignable key to open custom menu and select the list from there
 - [x] Select MIDI note(s) you want to add, then select the desired keyswitch articulation
