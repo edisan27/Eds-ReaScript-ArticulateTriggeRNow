@@ -1,8 +1,9 @@
 local articulation_note = 9
 local articulation_velocity = 127
 
--- Offset in beats (adjust visually)
-local beat_offset = 0.25  
+-- PPQ offsets (increase these if you want a bigger gap!)
+local start_ppq_offset = 120
+local end_ppq_offset = 120
 
 local editor = reaper.MIDIEditor_GetActive()
 if not editor then return end
@@ -17,7 +18,7 @@ local earliest = math.huge
 local latest = -math.huge
 local channel = nil
 
--- Find selected notes (range + channel)
+-- Collect selected notes range and channel
 for i = 0, noteCount - 1 do
     local ret, sel, _, startppqpos, endppqpos, chan = reaper.MIDI_GetNote(take, i)
     if sel then
@@ -29,19 +30,15 @@ end
 
 if earliest == math.huge then return end
 
--- Beat offset → PPQ
-local start_offset_ppq = reaper.MIDI_GetPPQPosFromProjQN(take, beat_offset)
-                        - reaper.MIDI_GetPPQPosFromProjQN(take, 0)
-local end_offset_ppq = start_offset_ppq
+local slide_start = earliest + start_ppq_offset
+local slide_end = latest - end_ppq_offset
 
-local slide_start = earliest + start_offset_ppq
-local slide_end = latest - end_offset_ppq
-
+-- Avoid negative or zero length
 if slide_end <= slide_start then
     slide_end = earliest + 10
 end
 
--- ✅ Remove only overlapping Slide Trigger keyswitches
+-- Delete overlapping existing Slide articulations (only same pitch+channel)
 local notes_to_delete = {}
 for i = 0, noteCount - 1 do
     local ret, _, _, s, e, chan, pitch = reaper.MIDI_GetNote(take, i)
@@ -51,12 +48,13 @@ for i = 0, noteCount - 1 do
         end
     end
 end
-table.sort(notes_to_delete, function(a, b) return a > b end)
-for _, i in ipairs(notes_to_delete) do
-    reaper.MIDI_DeleteNote(take, i)
+
+table.sort(notes_to_delete, function(a,b) return a > b end)
+for _, idx in ipairs(notes_to_delete) do
+    reaper.MIDI_DeleteNote(take, idx)
 end
 
--- ✅ Insert new slide articulation note
+-- Insert new Slide articulation note
 reaper.MIDI_InsertNote(
     take, false, false,
     slide_start,
@@ -66,6 +64,5 @@ reaper.MIDI_InsertNote(
     articulation_velocity,
     false
 )
-
 reaper.MIDI_Sort(take)
 reaper.Undo_EndBlock("Insert TruBass - HammerPull Articulation (beat-offset)", -1)
